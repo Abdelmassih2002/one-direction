@@ -1,3 +1,5 @@
+"use client";
+
 import { useI18n } from "@/lib/i18n/client";
 import { Badge } from "@/components/ui/badge";
 import type { MessageKey } from "@/lib/i18n";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, type ReactNode } from "react";
+import { useActionState, useContext, createContext, type ReactNode } from "react";
 import { useI18n } from "@/lib/i18n/client";
 import { idleState, type ActionState } from "@/server/actions/types";
 import { Alert } from "@/components/ui/feedback";
@@ -8,6 +8,17 @@ import { SubmitButton } from "@/components/ui/submit-button";
 import type { ButtonProps } from "@/components/ui/button";
 
 type ServerAction = (prev: ActionState, formData: FormData) => Promise<ActionState>;
+
+interface ActionFormContextValue {
+  state: ActionState;
+}
+
+const ActionFormContext = createContext<ActionFormContextValue>({ state: idleState });
+
+/** Hook to access the current ActionForm state from within a form's children. Returns idleState when not inside an ActionForm. */
+export function useActionFormState(): ActionState {
+  return useContext(ActionFormContext).state;
+}
 
 export function ActionForm({
   action,
@@ -23,7 +34,7 @@ export function ActionForm({
   fields,
 }: {
   action: ServerAction;
-  children?: ReactNode | ((state: ActionState) => ReactNode);
+  children?: ReactNode;
   submitLabel?: string;
   pendingLabel?: string;
   className?: string;
@@ -38,45 +49,47 @@ export function ActionForm({
   const { t } = useI18n();
 
   return (
-    <form action={formAction} className={className}>
-      {state.status === "error" && state.messageKey ? (
-        <Alert tone="error" className="mb-3">
-          {t(state.messageKey)}
-        </Alert>
-      ) : null}
-      {state.status === "success" && showSuccess ? (
-        <Alert tone="success" className="mb-3">
-          {t("common.saved")}
-        </Alert>
-      ) : null}
+    <ActionFormContext.Provider value={{ state }}>
+      <form action={formAction} className={className}>
+        {state.status === "error" && state.messageKey ? (
+          <Alert tone="error" className="mb-3">
+            {t(state.messageKey)}
+          </Alert>
+        ) : null}
+        {state.status === "success" && showSuccess ? (
+          <Alert tone="success" className="mb-3">
+            {t("common.saved")}
+          </Alert>
+        ) : null}
 
-      {fields
-        ? Object.entries(fields).map(([name, value]) =>
-            value === undefined ? null : (
-              <input
-                key={name}
-                type="hidden"
-                name={name}
-                value={typeof value === "boolean" ? String(value) : value}
-              />
+        {fields
+          ? Object.entries(fields).map(([name, value]) =>
+              value === undefined ? null : (
+                <input
+                  key={name}
+                  type="hidden"
+                  name={name}
+                  value={typeof value === "boolean" ? String(value) : value}
+                />
+              )
             )
-          )
-        : null}
+          : null}
 
-      {typeof children === "function" ? children(state) : children}
+        {children}
 
-      {hideSubmit ? null : (
-        <SubmitButton
-          type="submit"
-          variant={variant}
-          size={size}
-          block={block}
-          pendingLabel={pendingLabel ?? t("common.saving")}
-        >
-          {submitLabel ?? t("common.save")}
-        </SubmitButton>
-      )}
-    </form>
+        {hideSubmit ? null : (
+          <SubmitButton
+            type="submit"
+            variant={variant}
+            size={size}
+            block={block}
+            pendingLabel={pendingLabel ?? t("common.saving")}
+          >
+            {submitLabel ?? t("common.save")}
+          </SubmitButton>
+        )}
+      </form>
+    </ActionFormContext.Provider>
   );
 }
 

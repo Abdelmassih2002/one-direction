@@ -219,61 +219,58 @@ export default async function TasksPage({
             </summary>
             <div className="surface absolute end-0 z-20 mt-2 w-[min(24rem,calc(100vw-2rem))] p-4 shadow-[var(--shadow-md)]">
               <ActionForm action={createTaskAction} submitLabel={t("common.create")}>
-                {(state) => (
-                  <div className="space-y-3 pb-3">
-                    <Field
-                      label={t("tasks.title-label")}
-                      htmlFor="new-task-title"
-                      error={state.fieldErrors?.title ? t("tasks.errors.title") : undefined}
-                    >
-                      <Input id="new-task-title" name="title" required maxLength={300} />
-                    </Field>
-                    <Field label={t("tasks.description")} htmlFor="new-task-description">
-                      <Textarea id="new-task-description" name="description" rows={2} />
-                    </Field>
-                    <div className="grid gap-2 sm:grid-cols-2">
-                      <Field label={t("tasks.goal")} htmlFor="new-task-goal">
-                        <Select id="new-task-goal" name="goalId" defaultValue="">
-                          <option value="">—</option>
-                          {goals.map((goal) => (
-                            <option key={goal.id} value={goal.id}>
-                              {goal.title}
-                            </option>
-                          ))}
-                        </Select>
-                      </Field>
-                      <Field label={t("tasks.project")} htmlFor="new-task-project">
-                        <Select id="new-task-project" name="projectId" defaultValue="">
-                          <option value="">—</option>
-                          {projects.map((project) => (
-                            <option key={project.id} value={project.id}>
-                              {project.title}
-                            </option>
-                          ))}
-                        </Select>
-                      </Field>
-                      <Field label={t("tasks.schedule")} htmlFor="new-task-scheduled">
-                        <Input id="new-task-scheduled" name="scheduledFor" type="date" />
-                      </Field>
-                      <Field label={t("tasks.estimate")} htmlFor="new-task-estimate">
-                        <Input id="new-task-estimate" name="estimateMinutes" type="number" min={1} />
-                      </Field>
-                    </div>
-                    <Field label={t("tasks.status")} htmlFor="new-task-status">
-                      <Select id="new-task-status" name="status" defaultValue="todo">
-                        {FILTERS.map((status) => (
-                          <option key={status} value={status}>
-                            {t(`tasks.status.${status}` as MessageKey)}
+                <div className="space-y-3 pb-3">
+                  <Field
+                    label={t("tasks.title-label")}
+                    htmlFor="new-task-title"
+                  >
+                    <Input id="new-task-title" name="title" required maxLength={300} />
+                  </Field>
+                  <Field label={t("tasks.description")} htmlFor="new-task-description">
+                    <Textarea id="new-task-description" name="description" rows={2} />
+                  </Field>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <Field label={t("tasks.goal")} htmlFor="new-task-goal">
+                      <Select id="new-task-goal" name="goalId" defaultValue="">
+                        <option value="">—</option>
+                        {goals.map((goal) => (
+                          <option key={goal.id} value={goal.id}>
+                            {goal.title}
                           </option>
                         ))}
                       </Select>
                     </Field>
-                    <label className="flex items-center gap-2 text-xs">
-                      <input type="checkbox" name="isTopPriority" value="true" />
-                      {t("tasks.top-priority")}
-                    </label>
+                    <Field label={t("tasks.project")} htmlFor="new-task-project">
+                      <Select id="new-task-project" name="projectId" defaultValue="">
+                        <option value="">—</option>
+                        {projects.map((project) => (
+                          <option key={project.id} value={project.id}>
+                            {project.title}
+                          </option>
+                        ))}
+                      </Select>
+                    </Field>
+                    <Field label={t("tasks.schedule")} htmlFor="new-task-scheduled">
+                      <Input id="new-task-scheduled" name="scheduledFor" type="date" />
+                    </Field>
+                    <Field label={t("tasks.estimate")} htmlFor="new-task-estimate">
+                      <Input id="new-task-estimate" name="estimateMinutes" type="number" min={1} />
+                    </Field>
                   </div>
-                )}
+                  <Field label={t("tasks.status")} htmlFor="new-task-status">
+                    <Select id="new-task-status" name="status" defaultValue="todo">
+                      {FILTERS.map((status) => (
+                        <option key={status} value={status}>
+                          {t(`tasks.status.${status}` as MessageKey)}
+                        </option>
+                      ))}
+                    </Select>
+                  </Field>
+                  <label className="flex items-center gap-2 text-xs">
+                    <input type="checkbox" name="isTopPriority" value="true" />
+                    {t("tasks.top-priority")}
+                  </label>
+                </div>
               </ActionForm>
             </div>
           </details>

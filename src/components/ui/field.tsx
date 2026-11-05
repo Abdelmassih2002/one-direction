@@ -1,4 +1,7 @@
+"use client";
+
 import type { ComponentProps } from "react";
+import { useActionFormState } from "@/components/shared/action-form";
 import { cn } from "@/lib/utils";
 
 const controlBase =
@@ -44,14 +47,20 @@ export function Field({
   children: React.ReactNode;
   className?: string;
 }) {
+  // When inside an ActionForm, automatically pick up field errors from form state.
+  const autoError =
+    error === undefined
+      ? useActionFormState().fieldErrors?.[label.toLowerCase().replace(/[^a-z0-9]+/g, "_")]
+      : undefined;
+
   return (
     <div className={cn("space-y-1", className)}>
       <Label htmlFor={htmlFor}>{label}</Label>
       {children}
       {hint ? <p className="text-xs text-[var(--color-muted)]">{hint}</p> : null}
-      {error ? (
+      {autoError ? (
         <p role="alert" className="text-xs font-medium text-[var(--color-danger)]">
-          {error}
+          {autoError}
         </p>
       ) : null}
     </div>

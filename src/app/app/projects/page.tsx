@@ -55,39 +55,36 @@ export default async function ProjectsPage() {
             </summary>
             <div className="surface absolute end-0 z-20 mt-2 w-[min(22rem,calc(100vw-2rem))] p-4 shadow-[var(--shadow-md)]">
               <ActionForm action={createProjectAction} submitLabel={t("common.create")}>
-                {(state) => (
-                  <div className="space-y-3 pb-3">
-                    <Field
-                      label={t("projects.title-label")}
-                      htmlFor="project-title"
-                      error={state.fieldErrors?.title ? t("projects.errors.title") : undefined}
-                    >
-                      <Input id="project-title" name="title" required maxLength={200} />
-                    </Field>
-                    <Field label={t("projects.linked-goal")} htmlFor="project-goal">
-                      <Select id="project-goal" name="goalId" defaultValue="">
-                        <option value="">{t("projects.no-goal")}</option>
-                        {goals.map((goal) => (
-                          <option key={goal.id} value={goal.id}>
-                            {goal.title}
-                          </option>
-                        ))}
-                      </Select>
-                    </Field>
-                    <Field label={t("projects.status")} htmlFor="project-status">
-                      <Select id="project-status" name="status" defaultValue="active">
-                        {["planned", "active", "on_hold", "completed"].map((status) => (
-                          <option key={status} value={status}>
-                            {t(`projects.status.${status}` as MessageKey)}
-                          </option>
-                        ))}
-                      </Select>
-                    </Field>
-                    <Field label={t("projects.description")} htmlFor="project-description">
-                      <Textarea id="project-description" name="description" rows={2} />
-                    </Field>
-                  </div>
-                )}
+                <div className="space-y-3 pb-3">
+                  <Field
+                    label={t("projects.title-label")}
+                    htmlFor="project-title"
+                  >
+                    <Input id="project-title" name="title" required maxLength={200} />
+                  </Field>
+                  <Field label={t("projects.linked-goal")} htmlFor="project-goal">
+                    <Select id="project-goal" name="goalId" defaultValue="">
+                      <option value="">{t("projects.no-goal")}</option>
+                      {goals.map((goal) => (
+                        <option key={goal.id} value={goal.id}>
+                          {goal.title}
+                        </option>
+                      ))}
+                    </Select>
+                  </Field>
+                  <Field label={t("projects.status")} htmlFor="project-status">
+                    <Select id="project-status" name="status" defaultValue="active">
+                      {["planned", "active", "on_hold", "completed"].map((status) => (
+                        <option key={status} value={status}>
+                          {t(`projects.status.${status}` as MessageKey)}
+                        </option>
+                      ))}
+                    </Select>
+                  </Field>
+                  <Field label={t("projects.description")} htmlFor="project-description">
+                    <Textarea id="project-description" name="description" rows={2} />
+                  </Field>
+                </div>
               </ActionForm>
             </div>
           </details>

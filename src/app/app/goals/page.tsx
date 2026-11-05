@@ -76,42 +76,39 @@ export default async function GoalsPage({
             </summary>
             <div className="surface absolute end-0 z-20 mt-2 w-[min(22rem,calc(100vw-2rem))] p-4 shadow-[var(--shadow-md)]">
               <ActionForm action={createGoalAction} submitLabel={t("common.create")}>
-                {(state) => (
-                  <div className="space-y-3 pb-3">
-                    <Field
-                      label={t("goals.title-label")}
-                      htmlFor="goal-title"
-                      error={state.fieldErrors?.title ? t("goals.errors.title") : undefined}
-                    >
-                      <Input id="goal-title" name="title" required maxLength={200} />
-                    </Field>
-                    <Field label={t("goals.life-area")} htmlFor="goal-area">
-                      <Select id="goal-area" name="lifeAreaId" defaultValue="">
-                        <option value="">{t("goals.no-area")}</option>
-                        {areas.map((area) => (
-                          <option key={area.id} value={area.id}>
-                            {area.name}
-                          </option>
-                        ))}
-                      </Select>
-                    </Field>
-                    <Field label={t("goals.status")} htmlFor="goal-status">
-                      <Select id="goal-status" name="status" defaultValue="planned">
-                        {STATUSES.filter((status) => status !== "archived").map((status) => (
-                          <option key={status} value={status}>
-                            {t(`goals.status.${status}` as MessageKey)}
-                          </option>
-                        ))}
-                      </Select>
-                    </Field>
-                    <Field label={t("goals.target-date")} htmlFor="goal-date">
-                      <Input id="goal-date" name="targetDate" type="date" />
-                    </Field>
-                    <Field label={t("goals.description-label")} htmlFor="goal-description">
-                      <Textarea id="goal-description" name="description" rows={2} />
-                    </Field>
-                  </div>
-                )}
+                <div className="space-y-3 pb-3">
+                  <Field
+                    label={t("goals.title-label")}
+                    htmlFor="goal-title"
+                  >
+                    <Input id="goal-title" name="title" required maxLength={200} />
+                  </Field>
+                  <Field label={t("goals.life-area")} htmlFor="goal-area">
+                    <Select id="goal-area" name="lifeAreaId" defaultValue="">
+                      <option value="">{t("goals.no-area")}</option>
+                      {areas.map((area) => (
+                        <option key={area.id} value={area.id}>
+                          {area.name}
+                        </option>
+                      ))}
+                    </Select>
+                  </Field>
+                  <Field label={t("goals.status")} htmlFor="goal-status">
+                    <Select id="goal-status" name="status" defaultValue="planned">
+                      {STATUSES.filter((status) => status !== "archived").map((status) => (
+                        <option key={status} value={status}>
+                          {t(`goals.status.${status}` as MessageKey)}
+                        </option>
+                      ))}
+                    </Select>
+                  </Field>
+                  <Field label={t("goals.target-date")} htmlFor="goal-date">
+                    <Input id="goal-date" name="targetDate" type="date" />
+                  </Field>
+                  <Field label={t("goals.description-label")} htmlFor="goal-description">
+                    <Textarea id="goal-description" name="description" rows={2} />
+                  </Field>
+                </div>
               </ActionForm>
             </div>
           </details>

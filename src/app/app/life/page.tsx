@@ -65,26 +65,23 @@ export default async function LifePage() {
             </summary>
             <div className="surface absolute end-0 z-20 mt-2 w-72 p-4 shadow-[var(--shadow-md)]">
               <ActionForm action={createLifeAreaAction} submitLabel={t("common.create")}>
-                {(state) => (
-                  <div className="space-y-3 pb-3">
-                    <Field
-                      label={t("life.name")}
-                      htmlFor="area-name"
-                      error={state.fieldErrors?.name ? t("life.errors.name") : undefined}
-                    >
-                      <Input id="area-name" name="name" required maxLength={80} />
-                    </Field>
-                    <Field label={t("life.color")} htmlFor="area-color">
-                      <Input
-                        id="area-color"
-                        name="color"
-                        type="color"
-                        defaultValue="#1f5f4d"
-                        className="h-9 w-16 p-1"
-                      />
-                    </Field>
-                  </div>
-                )}
+                <div className="space-y-3 pb-3">
+                  <Field
+                    label={t("life.name")}
+                    htmlFor="area-name"
+                  >
+                    <Input id="area-name" name="name" required maxLength={80} />
+                  </Field>
+                  <Field label={t("life.color")} htmlFor="area-color">
+                    <Input
+                      id="area-color"
+                      name="color"
+                      type="color"
+                      defaultValue="#1f5f4d"
+                      className="h-9 w-16 p-1"
+                    />
+                  </Field>
+                </div>
               </ActionForm>
             </div>
           </details>
